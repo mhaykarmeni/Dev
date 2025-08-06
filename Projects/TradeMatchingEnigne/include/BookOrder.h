@@ -5,35 +5,35 @@
 #include <functional>
 
 class alignas(16) BookOrder {
-    private:
+private:
         unsigned               m_traderId;
-	    unsigned               m_quantity;
-	    unsigned               m_price;
+	unsigned               m_quantity;
+	unsigned               m_price;
         char                   m_side;
-	    bool                   m_isValid;
-    public:
+	bool                   m_isValid;
+public:
         constexpr BookOrder() noexcept :
-            m_traderId{},
-            m_quantity{},
-            m_price{},
-            m_side{},
-            m_isValid{false}
+     		m_traderId{},
+            	m_quantity{},
+            	m_price{},
+            	m_side{},
+            	m_isValid{false}
         {}
-	    constexpr explicit BookOrder(unsigned trId, unsigned quantity, unsigned price, char side) noexcept :
-		    m_traderId{trId},
-            m_quantity{quantity},
-		    m_price{price},
-            m_side{side},
-            m_isValid{(m_traderId > 0) && (m_quantity > 0) && (m_price > 0) && (m_side == 'B' || m_side == 'S')}
-	    {}
-	    BookOrder(const BookOrder&) = default;
-	    BookOrder& operator=(const BookOrder&) = delete;
-	    [[nodiscard]] constexpr unsigned getId() const noexcept { return m_traderId; }
-	    [[nodiscard]] constexpr unsigned getQuantity() const noexcept { return m_quantity; }
-	    [[nodiscard]] constexpr unsigned getPrice() const noexcept { return m_price; }
-        [[nodiscard]] constexpr char     getSide() const noexcept { return m_side; }
-	    void setQuantity(unsigned val) noexcept { m_quantity = val; }
-	    void setPrice(unsigned val) noexcept { m_price = val; }
+	constexpr explicit BookOrder(unsigned trId, unsigned quantity, unsigned price, char side) noexcept :
+		m_traderId{trId},
+            	m_quantity{quantity},
+		m_price{price},
+            	m_side{side},
+            	m_isValid{(m_traderId > 0) && (m_quantity > 0) && (m_price > 0) && (m_side == 'B' || m_side == 'S')}
+	{}
+	BookOrder(const BookOrder&) = default;
+	BookOrder& operator=(const BookOrder&) = delete;
+	[[nodiscard]] constexpr unsigned getId() const noexcept { return m_traderId; }
+	[[nodiscard]] constexpr unsigned getQuantity() const noexcept { return m_quantity; }
+	[[nodiscard]] constexpr unsigned getPrice() const noexcept { return m_price; }
+       	[[nodiscard]] constexpr char     getSide() const noexcept { return m_side; }
+	void setQuantity(unsigned val) noexcept { m_quantity = val; }
+	void setPrice(unsigned val) noexcept { m_price = val; }
         constexpr bool isValid() const noexcept { return m_isValid; }
         void print() const {std::cout << "TraderId: " << m_traderId << " Quantity: " << m_quantity << " Price: " << m_price << " Side: " << m_side <<'\n';}
 };

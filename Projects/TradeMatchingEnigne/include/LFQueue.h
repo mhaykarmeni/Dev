@@ -17,7 +17,7 @@ namespace Common {
     }
 
     auto updateWriteIndex() noexcept {
-      m_nextWriteIdx = (next_write_index_ + 1) % m_storage.size();
+      m_nextWriteIdx = (m_nextWriteIdx + 1) % m_storage.size();
       m_numElements++;
     }
 
@@ -26,7 +26,7 @@ namespace Common {
     }
 
     auto updateReadIndex() noexcept {
-      m_nextReadIdx = (next_read_index_ + 1) % m_storage.size();
+      m_nextReadIdx = (m_nextReadIdx + 1) % m_storage.size();
       ASSERT(m_numElements != 0, "Read an invalid element in:" + std::to_string(pthread_self()));
       m_numElements--;
     }

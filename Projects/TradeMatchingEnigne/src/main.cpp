@@ -20,12 +20,15 @@ void generateInputFile(const char* fileName, unsigned ordersCount) {
 }
 
 int main(int argc, char* argv[]) {
-    if (argc != 4) {
-        std::cerr << "Usage: " << argv[0] << " <number_of_orders> <std_map|btree_map> <debug mode 0|1>\n";
+    if (argc != 5) {
+        std::cerr << "Usage: " << argv[0] << " <number_of_orders> <std_map|btree_map> <debug mode 0|1> <generate input file 0|1>\n";
         return 1;
     }
     const unsigned numOrders = std::atoi(argv[1]);
-    generateInputFile("input.txt", numOrders);    
+    const bool isGenerationNeeded = argv[4];
+    if(isGenerationNeeded) {
+        generateInputFile("input.txt", numOrders);
+    }
     std::string containerType = argv[2];
     const bool isDbgMode = argv[3];
 

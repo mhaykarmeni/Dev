@@ -4,6 +4,7 @@
 #include <utility>
 #include <functional>
 
+
 class alignas(16) BookOrder {
 private:
         unsigned               m_traderId;

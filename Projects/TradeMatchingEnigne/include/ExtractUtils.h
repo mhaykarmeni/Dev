@@ -5,6 +5,7 @@
 #include <fstream>
 
 #include "BookOrder.h"
+#include "Macros.h"
 
 #include <stdlib.h>
 #include <chrono>
@@ -13,7 +14,7 @@ template<class MapContBuy, class MapContSell>
 class Extractor {
     struct LineParser {
         BookOrder process(const std::string& line) {
-            if(line.empty()) [[unlikely]] {
+            if(UNLIKELY(line.empty())) {
                 std::cerr << "Invalid input. Exiting.\n";
                 return BookOrder{};//invalid order
             }

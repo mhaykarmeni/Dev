@@ -4,6 +4,7 @@
 #include <utility>
 #include <functional>
 
+#include "Macros.h"
 
 class alignas(16) BookOrder {
 private:
@@ -86,7 +87,7 @@ private:
     bool updateAll(OrderTypeMap& cont, OrderTypeMap::iterator& it, BookOrder& order) {
         const bool mutuallyComplete = it->second.front().getQuantity() == order.getQuantity();
         bool isFinalUpdate = false;
-        if(mutuallyComplete) [[unlikely]] {
+        if(UNLIKELY(mutuallyComplete)) {
             it->second.pop();
             if(it->second.empty()) {
                 it = cont.erase(it);
@@ -116,14 +117,14 @@ private:
     }
 public:
     void tryExecute(BookOrder& order) {
-        if(order.isValid()) [[likely]] {
+        if(LIKELY(order.isValid())) {
             const char orderSide = order.getSide();
             std::variant<std::reference_wrapper<MapContBuy>, std::reference_wrapper<MapContSell>> curOrderMap = (order.getSide() == 'S') ? 
                                                                                                                 std::variant<std::reference_wrapper<MapContBuy>, std::reference_wrapper<MapContSell>>(std::ref(m_buyOrders)) : 
                                                                                                                 std::variant<std::reference_wrapper<MapContBuy>, std::reference_wrapper<MapContSell>>(std::ref(m_sellOrders));
             const bool isStorableOrder = std::visit([&](auto&& contRef) -> bool {
                                 auto&& cont = contRef.get();
-                                if(cont.empty()) [[unlikely]] {
+                                if(UNLIKELY(cont.empty())) {
                                     return true;
                                 }                        
                                 const unsigned curOrderMapPrice = cont.begin()->second.front().getPrice();

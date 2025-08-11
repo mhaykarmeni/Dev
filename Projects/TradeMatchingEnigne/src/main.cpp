@@ -3,6 +3,7 @@
 #include <absl/container/btree_map.h>
 
 #include "ExtractUtils.h"
+#include "Logger.h"
 
 //Random orders' generator
 void generateInputFile(const char* fileName, unsigned ordersCount) {

@@ -4,10 +4,10 @@
 #include <fstream>
 #include <cstdio>
 
-#include "macros.h"
-#include "lf_m_queue.h"
-#include "thread_utils.h"
-#include "time_utils.h"
+#include "Macros.h"
+#include "LFQueue.h"
+#include "ThreadUtils.h"
+#include "TimeUtils.h"
 
 namespace Common {
   constexpr size_t LOG_QUEUE_SIZE = 8 * 1024 * 1024;
@@ -83,11 +83,11 @@ namespace Common {
       }
     }
 
-    explicit Logger(const std::string &m_filename):
-        m_fileName(m_filename), 
+    explicit Logger(const std::string &fileName):
+        m_fileName(fileName), 
         m_queue(LOG_QUEUE_SIZE) {
-        m_file.open(file_name);
-        ASSERT(m_file.is_open(), "Could not open log file:" + file_name);
+        m_file.open(m_fileName);
+        ASSERT(m_file.is_open(), "Could not open log file:" + m_fileName);
         mp_loggerThread = createAndStartThread(-1, "Common/Logger " + m_fileName, [this]() { flushQueue(); });
         ASSERT(mp_loggerThread != nullptr, "Failed to start Logger thread.");
     }

@@ -198,13 +198,13 @@ namespace Common {
     // Deleted default, copy & move constructors and assignment-operators.
     Logger() = delete;
 
-    Logger(const Logger &) = delete;
+    Logger(const Logger&) = delete;
 
-    Logger(const Logger &&) = delete;
+    Logger(const Logger&&) = delete;
 
-    Logger &operator=(const Logger &) = delete;
+    Logger &operator=(const Logger&) = delete;
 
-    Logger &operator=(const Logger &&) = delete;
+    Logger &operator=(const Logger&&) = delete;
 
   private:
     const std::string m_fileName;

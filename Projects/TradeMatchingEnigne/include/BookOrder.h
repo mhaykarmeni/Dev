@@ -8,10 +8,10 @@
 
 class alignas(16) BookOrder {
 private:
-        unsigned               m_traderId;
+    unsigned               m_traderId;
 	unsigned               m_quantity;
 	unsigned               m_price;
-        char                   m_side;
+    char                   m_side;
 	bool                   m_isValid;
 public:
         constexpr BookOrder() noexcept :

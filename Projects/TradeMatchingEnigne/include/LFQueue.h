@@ -38,13 +38,13 @@ namespace Common {
     // Deleted default, copy & move constructors and assignment-operators.
     LFQueue() = delete;
 
-    LFQueue(const LFQueue &) = delete;
+    LFQueue(const LFQueue&) = delete;
 
-    LFQueue(const LFQueue &&) = delete;
+    LFQueue(const LFQueue&&) = delete;
 
-    LFQueue &operator=(const LFQueue &) = delete;
+    LFQueue &operator=(const LFQueue&) = delete;
 
-    LFQueue &operator=(const LFQueue &&) = delete;
+    LFQueue &operator=(const LFQueue&&) = delete;
 
   private:
     std::vector<T> m_storage;

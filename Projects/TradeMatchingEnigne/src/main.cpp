@@ -32,28 +32,37 @@ int main(int argc, char* argv[]) {
         std::cerr << "Usage: " << argv[0] << " <number_of_orders> <std_map|btree_map> <debug mode 0|1> <generate input file 0|1>\n";
         return 1;
     }
-    Common::Logger logger("TradeMatchingEngine.log");
+    Common::Logger& logger = Common::Logger::getInstance();
     logger.log("Trade Matching Engine program launched at ");
     addCurrentDateTimeIntoLog(&logger);
     const unsigned numOrders = std::atoi(argv[1]);
-    const bool isGenerationNeeded = argv[4];
+    const bool isGenerationNeeded = std::atoi(argv[4]);
     if(isGenerationNeeded) {
         logger.log("Enabling auto generation of orders for % entries.\n", numOrders);
-        generateInputFile("input.txt", numOrders);
+        generateInputFile("tme_input.txt", numOrders);
+    }
+    else {
+        std::ifstream ifstr("tme_input.txt");
+        if (!ifstr.good()) {
+            logger.log("Error: 'tme_input.txt' not found. Nothing to load. Exiting.\n");
+            return 1;
+        } else {
+            logger.log("Found 'tme_input.txt', proceeding...\n");
+        }
     }
     std::string containerType = argv[2];
-    const bool isDbgMode = argv[3];
+    const bool isDbgMode = std::atoi(argv[3]);
 
     if (containerType == "std_map" || containerType.empty()) {
         logger.log("std::map is selected for internal representations of main order pool conatiners.\n");
         logger.log("Debug mode: %\n", isDbgMode);
-        std::ifstream ifstr("input.txt");
+        std::ifstream ifstr("tme_input.txt");
         Extractor< std::map<unsigned, std::queue<BookOrder>, std::greater<unsigned>>, std::map<unsigned, std::queue<BookOrder>> > extractor(isDbgMode);
         extractor.process(ifstr);
     } else if (containerType == "btree_map") {
         logger.log("btree_map is selected for internal representations of main order pool containers.\n");
         logger.log("Debug mode: %\n", isDbgMode);
-        std::ifstream ifstr("input.txt");
+        std::ifstream ifstr("tme_input.txt");
         Extractor< absl::btree_map<unsigned, std::queue<BookOrder>, std::greater<unsigned>>, absl::btree_map<unsigned, std::queue<BookOrder>> > extractor(isDbgMode);
         extractor.process(ifstr);
     } else {

@@ -41,6 +41,11 @@ namespace Common {
 
   class Logger final {
   public:
+    static Logger& getInstance() {
+        static Logger instance("tradeMatchingEngine.log");
+        return instance;
+    }
+  private:
     auto flushQueue() noexcept {
       while (m_running) {
 
@@ -158,7 +163,7 @@ namespace Common {
     auto pushValue(const std::string &value) noexcept {
       pushValue(value.c_str());
     }
-
+  public:
     template<typename T, typename... A>
     auto log(const char *s, const T &value, A... args) noexcept {
       while (*s) {

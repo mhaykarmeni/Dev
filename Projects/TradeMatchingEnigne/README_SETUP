@@ -1,0 +1,3 @@
+execute run.sh to append tme command-like tme bash function into bashrc file
+now you can use tme command for running the main tool.
+run tme -h or tme --help for more information

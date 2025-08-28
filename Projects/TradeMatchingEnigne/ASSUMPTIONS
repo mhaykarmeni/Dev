@@ -11,3 +11,7 @@ Assumption 4:
     The program needs following inputs: <executable> <number of orders(>=2)> <internal data structure type(std::map|btree_map)> <debug mode(0|1)>. 
     Last two arguments are defualted. Please provide correct arguments for proper execution. 
     You can provide your own input in "input.txt" file, otherwise the file with that name will be generated with the number of orders provided.
+
+Assumption 5:
+    Take into consideration that tme_input.txt is the name of the input file that user should provide.
+    If no file exists in the directory and autogeneration isn't enabled the program exits immediately.

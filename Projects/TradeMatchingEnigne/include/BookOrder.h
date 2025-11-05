@@ -33,7 +33,7 @@ public:
 	[[nodiscard]] constexpr unsigned getId() const noexcept { return m_traderId; }
 	[[nodiscard]] constexpr unsigned getQuantity() const noexcept { return m_quantity; }
 	[[nodiscard]] constexpr unsigned getPrice() const noexcept { return m_price; }
-       	[[nodiscard]] constexpr char     getSide() const noexcept { return m_side; }
+    [[nodiscard]] constexpr char     getSide() const noexcept { return m_side; }
 	void setQuantity(unsigned val) noexcept { m_quantity = val; }
 	void setPrice(unsigned val) noexcept { m_price = val; }
         constexpr bool isValid() const noexcept { return m_isValid; }
@@ -44,6 +44,7 @@ template <class MapContBuy, class MapContSell>
 class OrderPool {
     using buyContIterator =     typename MapContBuy::iterator;
     using sellContIterator =    typename MapContSell::iterator;
+    using BuySellMapRef =       std::variant<std::reference_wrapper<MapContBuy>, std::reference_wrapper<MapContSell>>;
     MapContBuy                         m_buyOrders;
     MapContSell                        m_sellOrders;
 public:
@@ -119,9 +120,7 @@ public:
     void tryExecute(BookOrder& order) {
         if(LIKELY(order.isValid())) {
             const char orderSide = order.getSide();
-            std::variant<std::reference_wrapper<MapContBuy>, std::reference_wrapper<MapContSell>> curOrderMap = (order.getSide() == 'S') ? 
-                                                                                                                std::variant<std::reference_wrapper<MapContBuy>, std::reference_wrapper<MapContSell>>(std::ref(m_buyOrders)) : 
-                                                                                                                std::variant<std::reference_wrapper<MapContBuy>, std::reference_wrapper<MapContSell>>(std::ref(m_sellOrders));
+            BuySellMapRef curOrderMap = (order.getSide() == 'S') ? BuySellMapRef(std::ref(m_buyOrders)) : BuySellMapRef(std::ref(m_sellOrders));
             const bool isStorableOrder = std::visit([&](auto&& contRef) -> bool {
                                 auto&& cont = contRef.get();
                                 if(UNLIKELY(cont.empty())) {
@@ -143,7 +142,7 @@ public:
     }
     
 
-    void executeOrder(std::variant<std::reference_wrapper<MapContBuy>, std::reference_wrapper<MapContSell>>& cont, BookOrder& order) {
+    void executeOrder(BuySellMapRef& cont, BookOrder& order) {
         auto comparator = (order.getSide() == 'S') ?    [](const unsigned priceInCont, const unsigned currPrice) { return priceInCont >= currPrice; } : 
                                                         [](const unsigned priceInCont, const unsigned currPrice) { return priceInCont <= currPrice; };
 

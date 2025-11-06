@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 3.28)
 project(TradeMatchingEngine CXX)
 
 # Use C++20
-set(CMAKE_CXX_STANDARD 20)
+set(CMAKE_CXX_STANDARD 23)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 set(SRC_DIR ${CMAKE_SOURCE_DIR}/src)

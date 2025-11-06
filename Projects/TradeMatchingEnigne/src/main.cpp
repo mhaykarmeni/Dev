@@ -1,5 +1,6 @@
 #include <map>
 #include <queue>
+#include <flat_map>
 #include <absl/container/btree_map.h>
 
 #include "ExtractUtils.h"
@@ -65,7 +66,15 @@ int main(int argc, char* argv[]) {
         std::ifstream ifstr("tme_input.txt");
         Extractor< absl::btree_map<unsigned, std::queue<BookOrder>, std::greater<unsigned>>, absl::btree_map<unsigned, std::queue<BookOrder>> > extractor(isDbgMode);
         extractor.process(ifstr);
-    } else {
+    }
+      else if (containerType == "std::flat_map") {
+        logger.log("std::flat_map is selected for internal representations of main order pool containers.\n");
+        logger.log("Debug mode: %\n", isDbgMode);
+        std::ifstream ifstr("tme_input.txt");
+        Extractor< std::flat_map<unsigned, std::queue<BookOrder>, std::greater<unsigned>>, absl::btree_map<unsigned, std::queue<BookOrder>> > extractor(isDbgMode);
+        extractor.process(ifstr);
+    }
+      else {
         std::cerr << "Unknown map type: " << containerType << "\n";
         return 2;
     }

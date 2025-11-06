@@ -2,10 +2,10 @@ Assumption 1:
     Internally to avoid from std::string for T1,T2,T3,... Ids are stored in unsigned integers.
 
 Assumption 2:
-    Since there is no condition in the documentation about absence of invalid orders such as T50 B 0 10 or T47 S 0 50, T36 K 50 50, etc, the vailidity flag is needed to refine valid orders.
+    Since there is no condition in the documentation about absence of invalid orders such as T50 B 0 10 or T47 S 0 50, T36 K 50 50, the vailidity flag is needed to refine valid orders.
 
 Assumption 3:
-    There are two internal data structures for storing orders, std::map and absl::btree_map.
+    There are three internal data structures for storing orders, std::map, std::flat_map and absl::btree_map. !!!Check your compiler supports C++23 standarts!!!
 
 Assumption 4:
     The program needs following inputs: <executable> <number of orders(>=2)> <internal data structure type(std::map|btree_map)> <debug mode(0|1)>. 

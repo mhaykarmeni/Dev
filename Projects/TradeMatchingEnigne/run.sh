@@ -25,4 +25,3 @@ fi
 # Reload bashrc
 echo "Reloading $BASHRC..."
 source "$BASHRC"
-
